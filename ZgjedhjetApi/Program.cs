@@ -12,7 +12,12 @@ builder.Services.AddControllers()
     });
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+
+builder.Services.AddSwaggerGen(c =>
+{
+    c.UseInlineDefinitionsForEnums();
+});
+
 builder.Services.AddScoped<IZgjedhjetService, ZgjedhjetService>();
 
 builder.Services.AddDbContext<LifeDbContext>(options =>
@@ -20,7 +25,6 @@ builder.Services.AddDbContext<LifeDbContext>(options =>
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

@@ -176,15 +176,11 @@ namespace ZgjedhjetApi.Services
                     });
                 }
 
-                await using var tx = await _db.Database.BeginTransactionAsync();
-
                 _db.Zgjedhjet.RemoveRange(_db.Zgjedhjet);
                 await _db.SaveChangesAsync();
 
                 await _db.Zgjedhjet.AddRangeAsync(rows);
                 await _db.SaveChangesAsync();
-
-                await tx.CommitAsync();
 
                 response.RecordsImported = rows.Count;
                 response.Success = response.Errors.Count == 0;
