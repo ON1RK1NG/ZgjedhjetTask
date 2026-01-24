@@ -9,12 +9,10 @@ namespace ZgjedhjetApi.Controllers
     [Route("api/[controller]")]
     public class ZgjedhjetController : ControllerBase
     {
-        private readonly ILogger<ZgjedhjetController> _logger;
         private readonly IZgjedhjetService _service;
 
-        public ZgjedhjetController(ILogger<ZgjedhjetController> logger, IZgjedhjetService service)
+        public ZgjedhjetController(IZgjedhjetService service)
         {
-            _logger = logger;
             _service = service;
         }
 
