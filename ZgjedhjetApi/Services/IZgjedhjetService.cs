@@ -1,5 +1,6 @@
 ﻿using ZgjedhjetApi.Enums;
 using ZgjedhjetApi.Models.DTOs;
+using ZgjedhjetApi.Models.Entities;
 
 namespace ZgjedhjetApi.Services
 {

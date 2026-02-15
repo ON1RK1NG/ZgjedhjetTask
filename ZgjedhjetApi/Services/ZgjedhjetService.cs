@@ -341,5 +341,37 @@ namespace ZgjedhjetApi.Services
             result.Add(sb.ToString());
             return result;
         }
+
+
+        internal static ZgjedhjetAggregatedResponse BuildAggregatedResponse(
+            IEnumerable<Zgjedhjet> rows,
+            Partia? partiaFilter)
+        {
+            var data = rows?.ToList() ?? new List<Zgjedhjet>();
+            var response = new ZgjedhjetAggregatedResponse();
+
+            if (partiaFilter.HasValue && partiaFilter.Value != Partia.TeGjitha)
+            {
+                response.Results.Add(new PartiaVotesResponse
+                {
+                    Partia = partiaFilter.Value.ToString(),
+                    TotalVota = data.Sum(x => GetVotes(x, partiaFilter.Value))
+                });
+
+                return response;
+            }
+
+            foreach (var p in Enum.GetValues<Partia>().Where(x => x != Partia.TeGjitha))
+            {
+                response.Results.Add(new PartiaVotesResponse
+                {
+                    Partia = p.ToString(),
+                    TotalVota = data.Sum(x => GetVotes(x, p))
+                });
+            }
+
+            response.Results = response.Results.OrderByDescending(x => x.TotalVota).ToList();
+            return response;
+        }
     }
 }
