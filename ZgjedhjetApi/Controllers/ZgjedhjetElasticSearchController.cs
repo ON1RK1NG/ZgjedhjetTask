@@ -151,7 +151,7 @@ public class ZgjedhjetElasticSearchController : ControllerBase
                 .Field("komuna")
                 .Query(query)
             ))
-            .Collapse(c => c.Field("komunaKeyword"))
+            .Collapse(c => c.Field("komunaKeyword.keyword"))
         , ct);
 
         if (!search.IsValidResponse)
